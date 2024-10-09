@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 int const N = 1e3;
 
@@ -30,7 +30,19 @@ void removeMinHeap(int minHeap[] , int& size){
     int curr = 1;
 
     while(2*curr <= size){ //looping till curr node has child nodes 
-        
+        int left = 2*curr;
+        int right = 2*curr + 1;
+        int minChild = left;
+        if(right <= size && arr[right] < arr[left]){
+            minChild = right;
+        }
+
+        if(arr[minChild] >= arr[curr]){
+            return;
+        }
+
+        swap(arr[minChild] , arr[curr]);
+        curr = minChild;
     }
 }
 

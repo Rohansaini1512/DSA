@@ -53,3 +53,43 @@ class Solution {
         return dist; // Return the shortest distance array
     }
 };
+
+
+//  set
+#include <vector>
+#include <set>
+using namespace std;
+
+class Solution {
+public:
+    // Function to find the shortest distance of all vertices from the source vertex src.
+    vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src) {
+        int n = adj.size();
+        set<pair<int, int>> st; // {distance, node}
+        vector<int> dist(n, 1e9); // Initialize distances with INF
+
+        dist[src] = 0;
+        st.insert({0, src});
+
+        while (!st.empty()) {
+            auto it = *(st.begin());
+            int d = it.first;
+            int curr = it.second;
+            st.erase(it);
+
+            for (auto t : adj[curr]) {
+                int node = t.first;  // Use .first instead of [0]
+                int w = t.second;    // Use .second instead of [1]
+
+                if (d + w < dist[node]) {
+                    if (dist[node] != 1e9) {
+                        st.erase({dist[node], node});
+                    }
+                    dist[node] = d + w;
+                    st.insert({dist[node], node});
+                }
+            }
+        }
+        return dist;
+    }
+};
